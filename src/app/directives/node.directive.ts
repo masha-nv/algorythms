@@ -18,6 +18,23 @@ export class NodeDirective {
   constructor() {
    }
 
+   @HostBinding('style.backgroundColor')
+   get weightClass() {
+      if (!this.node.isWeight) return;
+      if (this.node.weight <=10 ) {
+        return 'yellow'
+      } 
+      else if (this.node.weight > 10 && this.node.weight <= 50) {
+        return 'orange'
+      }
+      else if (this.node.weight > 50 && this.node.weight <= 100) {
+        return 'red'
+      }
+       else {
+        return 'purple'
+      }
+   }
+
    @HostListener('mousedown')
    onMouseDown() {
     if (this.isWeightAdded) {
