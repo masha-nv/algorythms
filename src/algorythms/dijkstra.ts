@@ -1,7 +1,5 @@
 import { MinHeap } from "./minHeap";
 
-const WEIGHT = 3;
-
 export interface Node {
     row: number,
     col: number,
@@ -13,7 +11,8 @@ export interface Node {
     isVisited: boolean,
     isVisitedClassAdded: boolean,
     isShortestPathClassAdded: boolean,
-    previous: Node,
+    previous: Node | null,
+    weight: number
 }
 export type Grid = [][] | any;
 
@@ -68,7 +67,7 @@ function getAllNodesInMinHeap(grid: Grid) {
 function updateNeighbors(closestNode: Node, grid: Grid) {
     const unvisitedNeighbors = getUnvisitedNeighbors(closestNode, grid);
     for (const neighbor of unvisitedNeighbors) {
-        neighbor.distance = neighbor.isWeight ?  closestNode.distance + WEIGHT : closestNode.distance + 1;
+        neighbor.distance = neighbor.isWeight ?  closestNode.distance + neighbor.weight : closestNode.distance + 1;
         neighbor.previous = closestNode
     }
 }
@@ -90,7 +89,7 @@ export function getShortestPathNodes (finishNode: Node) {
     let curr = finishNode;
     while (curr) {
         nodes.push(curr);
-        curr = curr.previous;
+        curr = curr.previous as unknown as Node;
     }
 
     return nodes;

@@ -1,6 +1,9 @@
 <button (click)="animateNodesVisitedInOrder()">view Dijkstra</button>
+<input #input type="number" (change)="addWeight(+input.value)">
+<span *ngIf="isAnimationComplete">Shortest Distance: {{steps}} steps</span>
 <div class="grid-container">
     <div class="row" *ngFor="let row of grid">
-        <div class="cell" *ngFor="let col of row" [ngClass]="getNodeClasses(col)"></div>
+        <div [selectedWeight]="selectedWeight" [appNode]="col" [isWeightAdded]="isWeightAdded" class="cell" *ngFor="let col of row" [ngClass]="getNodeClasses(col)" 
+       ><ng-container *ngIf="col.distance<1000000">{{col.distance}}</ng-container></div>
     </div>
-</div>z
+</div>
