@@ -1,5 +1,5 @@
 <button (click)="animateNodesVisitedInOrder()">view Dijkstra</button>
-<input #input type="number" (change)="addWeight(+input.value)">
+<input #input type="number" min="1" (change)="addWeight(+input.value)">
 <span *ngIf="isAnimationComplete">Shortest Distance: {{steps}} steps</span>
 <div class="grid-container">
     <div class="row" *ngFor="let row of grid">
