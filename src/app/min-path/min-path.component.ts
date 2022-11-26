@@ -11,15 +11,21 @@ const ROW_COUNT = 50, COL_COUNT = 50, START_ROW = 10, START_COL = 10, END_ROW = 
 })
 export class MinPathComponent implements OnInit {
     grid!: Grid;
+    isWeightAdded: boolean = false;
+    isMousePressed: boolean = false;
+    isAnimationComplete: boolean = false;
+    steps!: number;
+    selectedWeight!: number;
 
     constructor(){}
     
     ngOnInit(): void {
-        this.initializeGrid();
+        this.initializeGrid(this.grid);
     }
 
     animateNodesVisitedInOrder() {
-        this.initializeGrid();
+        this.isAnimationComplete = false;
+        this.initializeGrid(this.grid);
         const nodes = dijkstra(this.grid, this.grid[START_ROW][START_COL], this.grid[END_ROW][END_COL]);
         for (let i = 0; i<nodes.length; i++) {
             setTimeout(() => {
@@ -29,9 +35,10 @@ export class MinPathComponent implements OnInit {
         }
     }
 
-
     animateShortestPath(endNode: Node) {
+        this.isAnimationComplete = true;
         const nodes = getShortestPathNodes(endNode);
+        this.steps = endNode.distance;
         for (let i = 0; i<nodes.length; i++) {
             setTimeout(() => {
                 nodes[i].isVisitedClassAdded = false;
@@ -41,25 +48,33 @@ export class MinPathComponent implements OnInit {
         }
     }
 
-    initializeGrid() {
+    initializeGrid(grid: Grid) {
         const gridNodes = []
         for (let i = 0 ; i<ROW_COUNT; i++) {
-            const col = []
+            const col: Node[] = []
             for (let j = 0; j<COL_COUNT; j++) {
                 col.push({
                     row: i, col: j, 
                     isStart: (i === START_ROW && j === START_COL), 
                     isFinish: (i === END_ROW && j === END_COL),
-                    isWall: false,
-                    isWeight: false,
-                    distance: Infinity, 
-                    isVisited: false
+                    isWall: grid ? grid[i][j].isWall : false,
+                    isWeight: grid ? grid[i][j].isWeight : false,
+                    distance: grid ? grid[i][j].distance : Infinity, 
+                    isVisited: false,
+                    isVisitedClassAdded: false, 
+                    isShortestPathClassAdded: false, 
+                    previous: null,
+                    weight: grid ? grid[i][j].weight : 0
                 })
             }
-            
             gridNodes.push(col)
         }
         this.grid = gridNodes;
+    }
+
+    addWeight(weight: number) {
+        this.isWeightAdded = true;
+        this.selectedWeight = weight;
     }
 
     getNodeClasses(node: Node) {
@@ -67,6 +82,10 @@ export class MinPathComponent implements OnInit {
         node.isFinish ? 'node-finish' : 
         node.isVisitedClassAdded ? 'node-visited': 
         node.isShortestPathClassAdded ? 'node-shorest-path': 
+        node.isWeight ? 'node-weight' :
+        node.isWall ? 'node-wall' :
         ''
     }
+
+    
 }
