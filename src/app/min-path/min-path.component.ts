@@ -11,31 +11,27 @@ const ROW_COUNT = 50, COL_COUNT = 50, START_ROW = 10, START_COL = 10, END_ROW = 
 })
 export class MinPathComponent implements OnInit {
     grid!: Grid;
+
     constructor(){}
     
     ngOnInit(): void {
         this.initializeGrid();
-        const nodesVisitedInOrder = dijkstra(this.grid, this.grid[START_ROW][START_COL], this.grid[END_ROW][END_COL]);
-        this.animateNodesVisitedInOrder(nodesVisitedInOrder)
     }
 
-    animateNodesVisitedInOrder(nodes: Node[]) {
+    animateNodesVisitedInOrder() {
+        this.initializeGrid();
+        const nodes = dijkstra(this.grid, this.grid[START_ROW][START_COL], this.grid[END_ROW][END_COL]);
         for (let i = 0; i<nodes.length; i++) {
-            console.log(nodes[i] === this.grid[END_ROW][END_COL])
             setTimeout(() => {
-                if (nodes[i] === this.grid[END_ROW][END_COL]) {
-                    this.animateShortestPath(this.grid[END_ROW][END_COL]);
-                    return;
-                } else {
-                    nodes[i].isVisitedClassAdded = true;
-                } 
-            }, i*10)
+                nodes[i].isVisitedClassAdded = true;
+                if (i === nodes.length-1) this.animateShortestPath(this.grid[END_ROW][END_COL])
+            }, i*10);
         }
     }
 
+
     animateShortestPath(endNode: Node) {
         const nodes = getShortestPathNodes(endNode);
-        console.log('shortest path', nodes)
         for (let i = 0; i<nodes.length; i++) {
             setTimeout(() => {
                 nodes[i].isVisitedClassAdded = false;

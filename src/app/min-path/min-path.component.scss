@@ -18,12 +18,76 @@
 
 .node-finish {
     background-color: rgb(92, 63, 92);
+    
+    
+
 }
 
 .node-visited {
     background-color: rgb(167, 224, 167);
+    animation-name: visitedAnimation;
+    animation-duration: 1.3s;
+    animation-timing-function: ease-in;
+    animation-iteration-count: 1;
+    animation-delay: 0s;
+    animation-fill-mode: forwards;
 }
 
 .node-shorest-path {
     background-color: rgb(205, 50, 143);
+    animation-name: finishAnimation;
+    animation-duration: 1.3s;
+    animation-timing-function: ease-in;
+    animation-iteration-count: 1;
+    animation-delay: 0s;
+    animation-fill-mode: forwards;
+}
+
+
+// animations
+@keyframes visitedAnimation {
+    0% {
+        transform: scale(.3);
+        border-radius: 100%;
+        background-color: antiquewhite;
+    }
+
+    25% {
+        transform: scale(.7);
+        background-color: cornflowerblue;
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    75% {
+        transform: scale(.7);
+    }
+
+    100% {
+
+    }
+}
+
+@keyframes finishAnimation {
+    0% {
+        scale: .1;
+        background:rgb(205, 50, 143)
+    }
+
+    25% {
+        scale: .5;
+        rotate: (45deg)
+    }
+
+    50% {
+        scale: 1.1;
+        background-color: rgb(205, 50, 143, .4);
+        border-radius: 100%;
+    }
+
+    75% {
+        scale: 1.4
+    }
 }
