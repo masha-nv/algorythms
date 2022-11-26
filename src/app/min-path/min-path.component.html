@@ -4,6 +4,6 @@
 <div class="grid-container">
     <div class="row" *ngFor="let row of grid">
         <div [selectedWeight]="selectedWeight" [appNode]="col" [isWeightAdded]="isWeightAdded" class="cell" *ngFor="let col of row" [ngClass]="getNodeClasses(col)" 
-       ><ng-container *ngIf="col.distance<1000000">{{col.distance}}</ng-container></div>
+       ><ng-container *ngIf="col.distance<10000000 && isAnimationComplete">{{col.distance}}</ng-container></div>
     </div>
 </div>
