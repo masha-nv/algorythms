@@ -1,0 +1,29 @@
+.grid-container {
+    display: grid;
+    grid-template-rows: repeat(50, 1fr);
+    grid-template-columns: repeat(50, 1fr);
+    width: fit-content;
+    margin: auto;
+    column-gap: 1px;
+    .cell {
+        border: 1px solid rgb(96, 114, 149);
+        width: 20px;
+        height: 20px;
+    }
+}
+
+.node-start {
+    background-color: rgb(54, 99, 54);
+}
+
+.node-finish {
+    background-color: rgb(92, 63, 92);
+}
+
+.node-visited {
+    background-color: rgb(167, 224, 167);
+}
+
+.node-shorest-path {
+    background-color: rgb(205, 50, 143);
+}

@@ -1,0 +1,5 @@
+<div class="grid-container">
+    <div class="row" *ngFor="let row of grid">
+        <div class="cell" *ngFor="let col of row" [ngClass]="getNodeClasses(col)"></div>
+    </div>
+</div>
